@@ -106,11 +106,13 @@
             z-index: 2;
             text-align: center;
             background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
+            padding: 40px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             animation: fadeIn 1s ease;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         .heart {
@@ -151,10 +153,12 @@
 
         .message {
             color: white;
-            font-size: 1.2em;
-            margin-top: 20px;
+            font-size: 1.4em;
+            margin: 20px 0;
             opacity: 0;
             animation: fadeIn 2s ease-in 1s forwards;
+            line-height: 1.8;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .photo-wall {
@@ -280,8 +284,13 @@
         <div class="photo-wall" id="photoWall"></div>
         <div class="love-content">
             <div class="heart"></div>
-            <div class="names">展鸿 ❤️ 李铧</div>
-            <div class="message">永远爱你</div>
+            <div class="names">侯展鸿 ❤️ 李铧</div>
+            <div class="message">
+                遇见你是我最美丽的意外<br>
+                爱上你是我最幸福的选择<br>
+                愿我们的爱情永远如初见般美好<br>
+                愿我们的未来充满阳光与欢笑
+            </div>
         </div>
     </div>
     <div class="floating-hearts" id="floatingHearts"></div>
@@ -337,7 +346,7 @@
             const positions = [];
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            const radius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
+            const radius = Math.min(window.innerWidth, window.innerHeight) * 0.4; // 增加半径
             
             // 生成爱心形状的点
             for (let i = 0; i < count; i++) {
