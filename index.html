@@ -14,7 +14,7 @@
             overflow: hidden;
         }
 
-        #verificationContainer {
+        .verification-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -89,8 +89,11 @@
             opacity: 1;
         }
 
-        #mainContent {
-            display: none;
+        .hidden {
+            display: none !important;
+        }
+
+        .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -174,7 +177,7 @@
     </style>
 </head>
 <body>
-    <div id="verificationContainer">
+    <div class="verification-container" id="verificationContainer">
         <div class="verification-box">
             <h2>请输入密码</h2>
             <input type="password" class="password-input" id="passwordInput" placeholder="请输入访问密码">
@@ -184,7 +187,7 @@
         </div>
     </div>
 
-    <div id="mainContent">
+    <div class="container hidden" id="mainContent">
         <div class="heart"></div>
         <div class="message">
             亲爱的，你是我生命中最美丽的风景<br>
@@ -196,77 +199,50 @@
     <div class="floating-hearts" id="floatingHearts"></div>
 
     <script>
-        // 立即执行函数来保护变量
-        (function() {
-            const CORRECT_PASSWORD = '0204';
-            let isVerified = false;
+        // 验证密码
+        function verifyPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const correctPassword = '0204'; // 设置密码为 0204
+            const errorMessage = document.getElementById('errorMessage');
+            const verificationContainer = document.getElementById('verificationContainer');
+            const mainContent = document.getElementById('mainContent');
 
-            // 页面加载时立即隐藏主内容
-            document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('mainContent').style.display = 'none';
-                document.getElementById('verificationContainer').style.display = 'flex';
-            });
-
-            // 验证密码
-            window.verifyPassword = function() {
-                const password = document.getElementById('passwordInput').value;
-                const errorMessage = document.getElementById('errorMessage');
-                const verificationContainer = document.getElementById('verificationContainer');
-                const mainContent = document.getElementById('mainContent');
-
-                if (password === CORRECT_PASSWORD) {
-                    isVerified = true;
-                    verificationContainer.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    startFloatingHearts();
-                } else {
-                    errorMessage.classList.add('show');
-                    setTimeout(() => {
-                        errorMessage.classList.remove('show');
-                    }, 2000);
-                }
-            };
-
-            // 按回车键也可以验证
-            document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    verifyPassword();
-                }
-            });
-
-            // 创建漂浮爱心
-            function createFloatingHeart() {
-                if (!isVerified) return;
-                
-                const heart = document.createElement('div');
-                heart.className = 'floating-heart';
-                heart.innerHTML = '❤';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                document.getElementById('floatingHearts').appendChild(heart);
-                
+            if (password === correctPassword) {
+                verificationContainer.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                startFloatingHearts();
+            } else {
+                errorMessage.classList.add('show');
                 setTimeout(() => {
-                    heart.remove();
-                }, 6000);
+                    errorMessage.classList.remove('show');
+                }, 2000);
             }
+        }
 
-            function startFloatingHearts() {
-                if (!isVerified) return;
-                setInterval(createFloatingHeart, 300);
+        // 按回车键也可以验证
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
             }
+        });
 
-            // 防止通过控制台查看内容
-            document.addEventListener('contextmenu', function(e) {
-                if (!isVerified) e.preventDefault();
-            });
+        // 创建漂浮爱心
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.getElementById('floatingHearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
 
-            // 防止通过F12查看内容
-            document.addEventListener('keydown', function(e) {
-                if (!isVerified && (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I'))) {
-                    e.preventDefault();
-                }
-            });
-        })();
+        function startFloatingHearts() {
+            setInterval(createFloatingHeart, 300);
+        }
     </script>
 </body>
 </html> 
