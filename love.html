@@ -172,8 +172,8 @@
 
         .photo-item {
             position: absolute;
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -346,23 +346,24 @@
             const positions = [];
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            const radius = Math.min(window.innerWidth, window.innerHeight) * 0.4; // 增加半径
+            const radius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
             
             // 生成爱心形状的点
             for (let i = 0; i < count; i++) {
-                const angle = (i / count) * Math.PI * 2;
+                const t = i / count;
                 let x, y;
                 
-                if (angle < Math.PI) {
+                // 使用参数方程生成爱心形状
+                if (t < 0.5) {
                     // 左半边爱心
-                    const t = angle / Math.PI;
-                    x = centerX - radius * Math.sin(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
-                    y = centerY - radius * Math.cos(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
+                    const angle = t * Math.PI * 2;
+                    x = centerX - radius * (16 * Math.pow(Math.sin(angle), 3)) / 16;
+                    y = centerY - radius * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16;
                 } else {
                     // 右半边爱心
-                    const t = (angle - Math.PI) / Math.PI;
-                    x = centerX + radius * Math.sin(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
-                    y = centerY - radius * Math.cos(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
+                    const angle = (t - 0.5) * Math.PI * 2;
+                    x = centerX + radius * (16 * Math.pow(Math.sin(angle), 3)) / 16;
+                    y = centerY - radius * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16;
                 }
                 
                 positions.push({ x, y });
@@ -379,7 +380,7 @@
             const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
             let photoCount = 1;
             let loadedCount = 0;
-            const positions = calculateHeartPositions(20); // 预设20个位置
+            const positions = calculateHeartPositions(26); // 使用26个位置
 
             while (true) {
                 let photoLoaded = false;
@@ -407,8 +408,8 @@
                                 
                                 // 设置位置
                                 const pos = positions[loadedCount % positions.length];
-                                photoItem.style.left = `${pos.x - 75}px`; // 75是照片宽度的一半
-                                photoItem.style.top = `${pos.y - 75}px`; // 75是照片高度的一半
+                                photoItem.style.left = `${pos.x - 60}px`; // 60是照片宽度的一半
+                                photoItem.style.top = `${pos.y - 60}px`; // 60是照片高度的一半
                                 
                                 photoWall.appendChild(photoItem);
                                 
