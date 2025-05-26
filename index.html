@@ -23,8 +23,8 @@
 
         .heart {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             margin: 30px auto;
             animation: heartbeat 1.2s infinite;
         }
@@ -33,12 +33,12 @@
         .heart:after {
             content: "";
             position: absolute;
-            left: 50px;
+            left: 75px;
             top: 0;
-            width: 50px;
-            height: 80px;
+            width: 75px;
+            height: 120px;
             background: #ff0000;
-            border-radius: 50px 50px 0 0;
+            border-radius: 75px 75px 0 0;
             transform: rotate(-45deg);
             transform-origin: 0 100%;
         }
@@ -51,7 +51,7 @@
 
         .names {
             color: white;
-            font-size: 2em;
+            font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             margin-top: 20px;
             animation: fadeIn 2s ease-in;
@@ -59,10 +59,25 @@
 
         .message {
             color: white;
-            font-size: 1.2em;
+            font-size: 1.4em;
             margin-top: 20px;
             opacity: 0;
             animation: fadeIn 2s ease-in 1s forwards;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .romantic-message {
+            color: white;
+            font-size: 1.2em;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 2s ease-in 2s forwards;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 20px auto;
+            font-style: italic;
         }
 
         @keyframes heartbeat {
@@ -107,6 +122,14 @@
         <div class="heart"></div>
         <div class="names">展鸿 ❤️ 李铧</div>
         <div class="message">永远爱你</div>
+        <div class="romantic-message">
+            遇见你是我最美丽的意外，<br>
+            爱上你是我最幸福的选择。<br>
+            愿我们的爱情，<br>
+            如这跳动的爱心，<br>
+            永远充满活力，<br>
+            永远温暖如初。
+        </div>
     </div>
     <div class="floating-hearts" id="floatingHearts"></div>
 
