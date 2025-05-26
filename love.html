@@ -106,20 +106,20 @@
             z-index: 2;
             text-align: center;
             background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
+            padding: 30px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
             animation: fadeIn 1s ease;
-            max-width: 600px;
+            max-width: 400px;
             margin: 0 auto;
         }
 
         .heart {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 30px auto;
+            width: 80px;
+            height: 80px;
+            margin: 20px auto;
             animation: heartbeat 1.2s infinite;
         }
 
@@ -127,12 +127,12 @@
         .heart:after {
             content: "";
             position: absolute;
-            left: 50px;
+            left: 40px;
             top: 0;
-            width: 50px;
-            height: 80px;
+            width: 40px;
+            height: 64px;
             background: #ff0000;
-            border-radius: 50px 50px 0 0;
+            border-radius: 40px 40px 0 0;
             transform: rotate(-45deg);
             transform-origin: 0 100%;
         }
@@ -145,19 +145,19 @@
 
         .names {
             color: white;
-            font-size: 2em;
+            font-size: 1.6em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
+            margin-top: 15px;
             animation: fadeIn 2s ease-in;
         }
 
         .message {
             color: white;
-            font-size: 1.4em;
-            margin: 20px 0;
+            font-size: 1.1em;
+            margin: 15px 0;
             opacity: 0;
             animation: fadeIn 2s ease-in 1s forwards;
-            line-height: 1.8;
+            line-height: 1.6;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
@@ -172,8 +172,8 @@
 
         .photo-item {
             position: absolute;
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -346,22 +346,24 @@
             const positions = [];
             const centerX = window.innerWidth / 2;
             const centerY = window.innerHeight / 2;
-            const radius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
+            const baseRadius = Math.min(window.innerWidth, window.innerHeight) * 0.3;
             
             // 生成爱心形状的点
             for (let i = 0; i < count; i++) {
                 const t = i / count;
                 let x, y;
                 
-                // 使用参数方程生成爱心形状
+                // 使用参数方程生成爱心形状，并添加随机偏移
                 if (t < 0.5) {
                     // 左半边爱心
                     const angle = t * Math.PI * 2;
+                    const radius = baseRadius * (1 + Math.random() * 0.2); // 添加随机半径变化
                     x = centerX - radius * (16 * Math.pow(Math.sin(angle), 3)) / 16;
                     y = centerY - radius * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16;
                 } else {
                     // 右半边爱心
                     const angle = (t - 0.5) * Math.PI * 2;
+                    const radius = baseRadius * (1 + Math.random() * 0.2); // 添加随机半径变化
                     x = centerX + radius * (16 * Math.pow(Math.sin(angle), 3)) / 16;
                     y = centerY - radius * (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) / 16;
                 }
@@ -408,8 +410,8 @@
                                 
                                 // 设置位置
                                 const pos = positions[loadedCount % positions.length];
-                                photoItem.style.left = `${pos.x - 60}px`; // 60是照片宽度的一半
-                                photoItem.style.top = `${pos.y - 60}px`; // 60是照片高度的一半
+                                photoItem.style.left = `${pos.x - 50}px`; // 50是照片宽度的一半
+                                photoItem.style.top = `${pos.y - 50}px`; // 50是照片高度的一半
                                 
                                 photoWall.appendChild(photoItem);
                                 
