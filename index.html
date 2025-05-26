@@ -98,6 +98,11 @@
             margin: 0 auto;
             padding: 20px;
             text-align: center;
+            display: none; /* 默认隐藏主内容 */
+        }
+
+        .container.show {
+            display: block; /* 验证后显示主内容 */
         }
 
         .heart {
@@ -187,7 +192,7 @@
         </div>
     </div>
 
-    <div class="container hidden" id="mainContent">
+    <div class="container" id="mainContent">
         <div class="heart"></div>
         <div class="message">
             亲爱的，你是我生命中最美丽的风景<br>
@@ -208,8 +213,8 @@
             const mainContent = document.getElementById('mainContent');
 
             if (password === correctPassword) {
-                verificationContainer.classList.add('hidden');
-                mainContent.classList.remove('hidden');
+                verificationContainer.style.display = 'none'; // 隐藏验证框
+                mainContent.classList.add('show'); // 显示主内容
                 startFloatingHearts(); // 开始显示漂浮爱心
             } else {
                 errorMessage.classList.add('show');
@@ -243,6 +248,11 @@
         function startFloatingHearts() {
             setInterval(createFloatingHeart, 300);
         }
+
+        // 页面加载时确保主内容被隐藏
+        window.addEventListener('load', function() {
+            document.getElementById('mainContent').style.display = 'none';
+        });
     </script>
 </body>
 </html> 
