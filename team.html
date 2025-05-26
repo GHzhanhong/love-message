@@ -85,28 +85,39 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
             padding: 40px 0;
+            max-width: 1000px;
+            margin: 0 auto;
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
         }
 
         .gallery-item:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
         }
 
         .gallery-item img {
             width: 100%;
-            height: 300px;
+            height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
         }
 
         .gallery-caption {
@@ -114,12 +125,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
             color: white;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
             transform: translateY(100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .gallery-item:hover .gallery-caption {
@@ -132,6 +145,7 @@
             margin: 40px 0;
             opacity: 0;
             animation: fadeIn 1s ease-in 1s forwards;
+            line-height: 1.6;
         }
 
         @keyframes bounce {
@@ -171,6 +185,28 @@
                 opacity: 0;
             }
         }
+
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .team-name {
+                font-size: 2.5em;
+            }
+            
+            .slogan {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -191,17 +227,16 @@
         </div>
 
         <div class="gallery">
-            <!-- 这里需要添加实际的图片，你可以替换这些占位图片 -->
             <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x300?text=Team+Photo+1" alt="团队照片1">
+                <img src="1.png" alt="团队照片1">
                 <div class="gallery-caption">团队合影</div>
             </div>
             <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x300?text=Team+Photo+2" alt="团队照片2">
+                <img src="2.png" alt="团队照片2">
                 <div class="gallery-caption">比赛瞬间</div>
             </div>
             <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x300?text=Team+Photo+3" alt="团队照片3">
+                <img src="3.png" alt="团队照片3">
                 <div class="gallery-caption">训练时刻</div>
             </div>
         </div>
