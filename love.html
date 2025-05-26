@@ -7,10 +7,7 @@
     <style>
         body {
             margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            min-height: 100vh;
             background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
             font-family: 'Arial', sans-serif;
             overflow: hidden;
@@ -96,8 +93,24 @@
         }
 
         .container {
-            text-align: center;
             position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .love-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
         }
 
         .heart {
@@ -144,6 +157,77 @@
             animation: fadeIn 2s ease-in 1s forwards;
         }
 
+        .photo-wall {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .photo-item {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.1);
+            z-index: 3;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+            padding: 10px;
+            font-size: 0.9em;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            animation: float 6s linear infinite;
+        }
+
         @keyframes heartbeat {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -155,20 +239,6 @@
             to { opacity: 1; }
         }
 
-        .floating-hearts {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .floating-heart {
-            position: absolute;
-            font-size: 20px;
-            color: rgba(255, 255, 255, 0.6);
-            animation: float 6s linear infinite;
-        }
-
         @keyframes float {
             0% {
                 transform: translateY(100vh) scale(0);
@@ -177,6 +247,20 @@
             100% {
                 transform: translateY(-100px) scale(1);
                 opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .photo-item {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-item {
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
@@ -193,9 +277,12 @@
     </div>
 
     <div class="container hidden" id="mainContent">
-        <div class="heart"></div>
-        <div class="names">展鸿 ❤️ 李铧</div>
-        <div class="message">永远爱你</div>
+        <div class="photo-wall" id="photoWall"></div>
+        <div class="love-content">
+            <div class="heart"></div>
+            <div class="names">展鸿 ❤️ 李铧</div>
+            <div class="message">永远爱你</div>
+        </div>
     </div>
     <div class="floating-hearts" id="floatingHearts"></div>
 
@@ -212,6 +299,7 @@
                 verificationContainer.classList.add('hidden');
                 mainContent.classList.remove('hidden');
                 startFloatingHearts();
+                loadPhotos();
             } else {
                 errorMessage.classList.add('show');
                 setTimeout(() => {
@@ -243,6 +331,109 @@
         function startFloatingHearts() {
             setInterval(createFloatingHeart, 300);
         }
+
+        // 计算爱心形状的位置
+        function calculateHeartPositions(count) {
+            const positions = [];
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const radius = Math.min(window.innerWidth, window.innerHeight) * 0.35;
+            
+            // 生成爱心形状的点
+            for (let i = 0; i < count; i++) {
+                const angle = (i / count) * Math.PI * 2;
+                let x, y;
+                
+                if (angle < Math.PI) {
+                    // 左半边爱心
+                    const t = angle / Math.PI;
+                    x = centerX - radius * Math.sin(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
+                    y = centerY - radius * Math.cos(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
+                } else {
+                    // 右半边爱心
+                    const t = (angle - Math.PI) / Math.PI;
+                    x = centerX + radius * Math.sin(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
+                    y = centerY - radius * Math.cos(angle) * Math.sqrt(Math.abs(Math.cos(angle)));
+                }
+                
+                positions.push({ x, y });
+            }
+            
+            return positions;
+        }
+
+        // 加载照片
+        async function loadPhotos() {
+            const photoWall = document.getElementById('photoWall');
+            photoWall.innerHTML = '';
+
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            let photoCount = 1;
+            let loadedCount = 0;
+            const positions = calculateHeartPositions(20); // 预设20个位置
+
+            while (true) {
+                let photoLoaded = false;
+                
+                for (const ext of imageExtensions) {
+                    const img = new Image();
+                    
+                    try {
+                        await new Promise((resolve, reject) => {
+                            img.onload = () => {
+                                const photoItem = document.createElement('div');
+                                photoItem.className = 'photo-item';
+                                photoItem.style.animationDelay = `${loadedCount * 0.1}s`;
+                                
+                                const imgElement = document.createElement('img');
+                                imgElement.src = `https://ghzhanhong.github.io/love-message/love_photo/${photoCount}.${ext}`;
+                                imgElement.alt = `照片${photoCount}`;
+                                
+                                const caption = document.createElement('div');
+                                caption.className = 'photo-caption';
+                                caption.textContent = `美好回忆 ${photoCount}`;
+                                
+                                photoItem.appendChild(imgElement);
+                                photoItem.appendChild(caption);
+                                
+                                // 设置位置
+                                const pos = positions[loadedCount % positions.length];
+                                photoItem.style.left = `${pos.x - 75}px`; // 75是照片宽度的一半
+                                photoItem.style.top = `${pos.y - 75}px`; // 75是照片高度的一半
+                                
+                                photoWall.appendChild(photoItem);
+                                
+                                photoLoaded = true;
+                                loadedCount++;
+                                resolve();
+                            };
+                            
+                            img.onerror = () => {
+                                reject();
+                            };
+                            
+                            img.src = `https://ghzhanhong.github.io/love-message/love_photo/${photoCount}.${ext}`;
+                        });
+                        
+                        if (photoLoaded) break;
+                    } catch (error) {
+                        if (ext === imageExtensions[imageExtensions.length - 1]) {
+                            return;
+                        }
+                    }
+                }
+                
+                if (!photoLoaded) break;
+                photoCount++;
+            }
+        }
+
+        // 窗口大小改变时重新计算位置
+        window.addEventListener('resize', () => {
+            if (!document.getElementById('verificationContainer').classList.contains('hidden')) {
+                loadPhotos();
+            }
+        });
     </script>
 </body>
 </html> 
