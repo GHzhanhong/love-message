@@ -310,12 +310,20 @@
         .hidden {
             display: none !important;
         }
+
+        .password-hint {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
     <div class="verification-container" id="verificationContainer">
         <div class="verification-box">
             <h2>请输入密码</h2>
+            <p class="password-hint">提示：创群日期</p>
             <input type="password" class="password-input" id="passwordInput" placeholder="请输入访问密码">
             <br>
             <button class="verify-button" onclick="verifyPassword()">验证</button>
@@ -325,7 +333,7 @@
 
     <div class="container hidden" id="mainContent">
         <div class="header">
-            <h1 class="team-name">羽毛球战队</h1>
+            <h1 class="team-name">国羽训练局</h1>
             <p class="slogan">团结拼搏，永不言弃！</p>
         </div>
 
