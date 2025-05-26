@@ -290,7 +290,6 @@
                 // 尝试所有支持的格式
                 for (const ext of imageExtensions) {
                     const img = new Image();
-                    const photoPath = `team_photo/${photoCount}.${ext}`;
                     
                     try {
                         await new Promise((resolve, reject) => {
@@ -302,7 +301,7 @@
                                 
                                 // 创建图片元素
                                 const imgElement = document.createElement('img');
-                                imgElement.src = photoPath;
+                                imgElement.src = `https://ghzhanhong.github.io/love-message/team_photo/${photoCount}.${ext}`;
                                 imgElement.alt = `团队照片${photoCount}`;
                                 
                                 // 创建说明文字
@@ -326,7 +325,7 @@
                                 reject();
                             };
                             
-                            img.src = photoPath;
+                            img.src = `https://ghzhanhong.github.io/love-message/team_photo/${photoCount}.${ext}`;
                         });
                         
                         if (photoLoaded) break;
