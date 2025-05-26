@@ -15,7 +15,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -83,59 +83,58 @@
             box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
         }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            padding: 40px 0;
-            max-width: 1000px;
+        .photo-wall {
+            columns: 4;
+            column-gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .gallery-item {
+        .photo-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
             position: relative;
-            overflow: hidden;
             border-radius: 15px;
+            overflow: hidden;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             transition: all 0.4s ease;
-            aspect-ratio: 1;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
         }
 
-        .gallery-item:hover {
-            transform: scale(1.05) translateY(-10px);
+        .photo-item:hover {
+            transform: scale(1.02) translateY(-5px);
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
         }
 
-        .gallery-item img {
+        .photo-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
             display: block;
             transition: transform 0.4s ease;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
+        .photo-item:hover img {
+            transform: scale(1.05);
         }
 
-        .gallery-caption {
+        .photo-caption {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
             color: white;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             transform: translateY(100%);
             transition: transform 0.4s ease;
-            font-size: 1.2em;
+            font-size: 1.1em;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
 
-        .gallery-item:hover .gallery-caption {
+        .photo-item:hover .photo-caption {
             transform: translateY(0);
         }
 
@@ -186,11 +185,15 @@
             }
         }
 
-        @media (max-width: 768px) {
-            .gallery {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-                padding: 20px;
+        @media (max-width: 1200px) {
+            .photo-wall {
+                columns: 3;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .photo-wall {
+                columns: 2;
             }
             
             .team-name {
@@ -202,9 +205,9 @@
             }
         }
 
-        @media (max-width: 480px) {
-            .gallery {
-                grid-template-columns: 1fr;
+        @media (max-width: 600px) {
+            .photo-wall {
+                columns: 1;
             }
         }
     </style>
@@ -226,18 +229,46 @@
             团结一心，共创辉煌！
         </div>
 
-        <div class="gallery">
-            <div class="gallery-item">
+        <div class="photo-wall">
+            <!-- 第一列 -->
+            <div class="photo-item">
                 <img src="1.png" alt="团队照片1">
-                <div class="gallery-caption">团队合影</div>
+                <div class="photo-caption">团队合影</div>
             </div>
-            <div class="gallery-item">
+            <div class="photo-item">
                 <img src="2.png" alt="团队照片2">
-                <div class="gallery-caption">比赛瞬间</div>
+                <div class="photo-caption">比赛瞬间</div>
             </div>
-            <div class="gallery-item">
+            <div class="photo-item">
                 <img src="3.png" alt="团队照片3">
-                <div class="gallery-caption">训练时刻</div>
+                <div class="photo-caption">训练时刻</div>
+            </div>
+            <!-- 第二列 -->
+            <div class="photo-item">
+                <img src="1.png" alt="团队照片4">
+                <div class="photo-caption">精彩瞬间</div>
+            </div>
+            <div class="photo-item">
+                <img src="2.png" alt="团队照片5">
+                <div class="photo-caption">团队风采</div>
+            </div>
+            <!-- 第三列 -->
+            <div class="photo-item">
+                <img src="3.png" alt="团队照片6">
+                <div class="photo-caption">比赛现场</div>
+            </div>
+            <div class="photo-item">
+                <img src="1.png" alt="团队照片7">
+                <div class="photo-caption">训练日常</div>
+            </div>
+            <!-- 第四列 -->
+            <div class="photo-item">
+                <img src="2.png" alt="团队照片8">
+                <div class="photo-caption">团队活动</div>
+            </div>
+            <div class="photo-item">
+                <img src="3.png" alt="团队照片9">
+                <div class="photo-caption">精彩时刻</div>
             </div>
         </div>
     </div>
